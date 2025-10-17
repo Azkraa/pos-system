@@ -1,24 +1,27 @@
 <?php
 
-use App\Livewire\Customer\CreateCustomer;
-use App\Livewire\Customer\EditCustomer;
+use App\Models\Sale;
+use App\Livewire\POS;
 use Livewire\Volt\Volt;
 use Laravel\Fortify\Features;
 use App\Livewire\Items\EditItem;
 use App\Livewire\Items\ListItems;
 use App\Livewire\Sales\ListSales;
-use Illuminate\Support\Facades\Route;
-use App\Livewire\Management\ListUsers;
-use App\Livewire\Items\ListInventories;
-use App\Livewire\Customer\ListCustomers;
-use App\Livewire\Items\CreateInventory;
 use App\Livewire\Items\CreateItem;
 use App\Livewire\Items\EditInventory;
-use App\Livewire\Management\CreatePaymentMethod;
-use App\Livewire\Management\CreateUser;
-use App\Livewire\Management\EditPaymentMethod;
 use App\Livewire\Management\EditUser;
+use Illuminate\Support\Facades\Route;
+use App\Livewire\Management\ListUsers;
+use App\Livewire\Customer\EditCustomer;
+use App\Livewire\Items\CreateInventory;
+use App\Livewire\Items\ListInventories;
+use App\Livewire\Management\CreateUser;
+use App\Livewire\Customer\ListCustomers;
+use App\Livewire\Customer\CreateCustomer;
+use App\Livewire\Management\EditPaymentMethod;
 use App\Livewire\Management\ListPaymentMethods;
+use App\Livewire\Management\CreatePaymentMethod;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 Route::get('/', function () {
     return view('welcome');
@@ -47,6 +50,16 @@ Route::middleware(['auth'])->group(function () {
         ->name('two-factor.show');
 });
 
+Route::get('/sales/{sale}/receipt', function (\App\Models\Sale $sale) {
+    $sale->load(['saleItems.item', 'customer', 'paymentMethod']);
+    return view('pdf', ['records' => collect([$sale])]);
+})->name('sales.receipt');
+
+Route::get('/sales/{sale}/receipt.view', function (\App\Models\Sale $sale) {
+    $sale->load(['saleItems.item', 'customer', 'paymentMethod']);
+    return view('receipt', ['records' => collect([$sale])]);
+})->name('receipt.view');
+
 Route::middleware(['auth'])->group(function () {
     // users
     Route::get('/manage-users',ListUsers::class)->name('users.index');
@@ -70,6 +83,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/manage-payment-methods',ListPaymentMethods::class)->name('payment.method.index');
     Route::get('/edit-payment-method/{record}',EditPaymentMethod::class)->name('payment.method.update');
     Route::get('/create-payment-method',CreatePaymentMethod::class)->name('payment.method.create');
+
+
+    Route::get('/pos', POS::class)->name('pos');
 });
 
 require __DIR__.'/auth.php';
