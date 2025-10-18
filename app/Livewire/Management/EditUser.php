@@ -39,8 +39,9 @@ class EditUser extends Component implements HasActions, HasSchemas
                 ->columns(2)
                 ->schema([
                     TextInput::make('name')
-                    ->label('User Name'),
+                    ->label('Nama user'),
                     TextInput::make('email')
+                    ->label('Email')
                     ->unique(),
                     Select::make('role')
                     ->label('Role')
@@ -62,11 +63,11 @@ class EditUser extends Component implements HasActions, HasSchemas
         $this->record->update($data);
 
         Notification::make()
-        ->title('User updated!')
+        ->title('User diperbarui!')
         ->success()
-        ->body("User {$this->record->name} has been updated successfully!")
+        ->body("User {$this->record->name} berhasil diperbarui!")
         ->actions([
-            Action::make('View User Table')
+            Action::make('Kembali ke halaman sebelumnya')
             ->button()
             ->url(route('users.index')),
         ])

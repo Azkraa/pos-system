@@ -33,15 +33,17 @@ class EditCustomer extends Component implements HasActions, HasSchemas
     {
         return $schema
             ->components([
-                Section::make('Edit the Customer')
-                ->description('update the customer details as you want')
+                Section::make('Edit Data Pembeli')
+                ->description('Perbarui data pembeli sesuai yang kamu inginkan')
                 ->columns(2)
                 ->schema([
                     TextInput::make('name')
-                    ->label('Customer Name'),
+                    ->label('Nama pembeli'),
                     TextInput::make('email')
+                    ->label('Email')
                     ->unique(),
                     TextInput::make('phone')
+                    ->label('No. Hp')
                     ->tel(),
                 ])
             ])
@@ -56,11 +58,11 @@ class EditCustomer extends Component implements HasActions, HasSchemas
         $this->record->update($data);
 
         Notification::make()
-        ->title('Customer updated!')
+        ->title('Data pembeli diperbarui!')
         ->success()
-        ->body("Customer {$this->record->name} has been updated successfully!")
+        ->body("Data pembeli {$this->record->name} berhasil diperbarui!")
         ->actions([
-            Action::make('View Customers Table')
+            Action::make('Kembali ke halaman sebelumnya')
             ->button()
             ->url(route('customers.index')),
         ])

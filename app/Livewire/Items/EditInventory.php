@@ -33,13 +33,14 @@ class EditInventory extends Component implements HasActions, HasSchemas
     {
         return $schema
             ->components([
-                Section::make('Edit the Inventory')
-                ->description('update the Inventory details as you want')
+                Section::make('Edit Stok')
+                ->description('Perbarui stok sesuai yang kamu inginkan')
                 ->columns(2)
                 ->schema([
                     TextInput::make('item.name')
-                    ->label('Item Name'),
+                    ->label('Nama produk'),
                     TextInput::make('quantity')
+                    ->label('Stok')
                     ->integer(),
                 ])
             ])
@@ -54,11 +55,11 @@ class EditInventory extends Component implements HasActions, HasSchemas
         $this->record->update($data);
 
         Notification::make()
-        ->title('Inventory updated!')
+        ->title('Stok berhasil diperbarui!')
         ->success()
-        ->body("Inventory {$this->record->name} has been updated successfully!")
+        ->body("Stok {$this->record->name} berhasil diperbarui!")
         ->actions([
-            Action::make('View Inventory Table')
+            Action::make('Kembali ke halaman sebelumnya')
             ->button()
             ->url(route('inventories.index')),
         ])

@@ -33,25 +33,26 @@ class CreateUser extends Component implements HasActions, HasSchemas
     {
         return $schema
             ->components([
-                Section::make('Add the User')
-                ->description('Add new user details')
+                Section::make('Tambahkan User')
+                ->description('Tambahkan detail User baru sesuai yang kamu inginkan')
                 ->columns(2)
                 ->schema([
                 TextInput::make('name')
-                    ->label('User Name')
+                    ->label('Nama user')
                     ->required(),
                 TextInput::make('email')
-                    ->label('User Email')
+                    ->label('Email')
                     ->unique()
                     ->required(),
                 Select::make('role')
+                ->required()
                 ->options([
                     'cashier' => 'Cashier',
                     'admin' => 'Admin',
                 ])
                 ->native(false),
                 TextInput::make('password')
-                    ->label('User Password')
+                    ->label('Password')
                     ->required()
                     ->unique()
                     ->readOnly()
@@ -81,11 +82,11 @@ class CreateUser extends Component implements HasActions, HasSchemas
         $this->form->model($record)->saveRelationships();
 
         Notification::make()
-        ->title('User created!')
+        ->title('User ditambahkan!')
         ->success()
-        ->body("User created successfully!")
+        ->body("User berhasil ditambahkan!")
         ->actions([
-            Action::make('View User Table')
+            Action::make('Kembali ke halaman sebelumnya')
             ->button()
             ->url(route('users.index')),
         ])

@@ -29,10 +29,10 @@ class ListItems extends Component implements HasActions, HasSchemas, HasTable
         return $table
             ->query(fn (): Builder => Item::query())
             ->columns([
-                TextColumn::make('name')->searchable()->sortable(),
+                TextColumn::make('name')->label('Nama produk')->searchable()->sortable(),
                 TextColumn::make('sku')->searchable()->sortable(),
-                TextColumn::make('inventory.quantity')->badge()->sortable(),
-                TextColumn::make('price')->sortable()->money('IDR'),
+                TextColumn::make('inventory.quantity')->label('Stok')->badge()->sortable(),
+                TextColumn::make('price')->label('Harga')->sortable()->money('IDR'),
                 TextColumn::make('status')->badge()->color('info'),
             ])
             ->filters([
@@ -40,7 +40,7 @@ class ListItems extends Component implements HasActions, HasSchemas, HasTable
             ])
             ->headerActions([
                 Action::make('create')
-                ->label('Add Item')
+                ->label('Tambah Produk')
                 ->url(fn (): string => route('items.create'))
             ])
             ->recordActions([

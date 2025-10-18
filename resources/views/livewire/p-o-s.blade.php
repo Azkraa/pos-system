@@ -1,9 +1,9 @@
 <div class="flex h-screen bg-gray-100 dark:bg-neutral-900 font-sans antialiased text-gray-800 dark:text-gray-100">
     <div class="w-2/3 p-6 flex flex-col">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">Products</h2>
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">Produk</h2>
 
         <div class="flex-shrink-0 mb-4">
-            <input wire:model.live="search" type="text" placeholder="Search products by name or SKU..." class="w-full px-5 py-3 border border-blue-300 rounded-xl shadow-sm
+            <input wire:model.live="search" type="text" placeholder="Cari produk berdasarkan nama atau SKU" class="w-full px-5 py-3 border border-blue-300 rounded-xl shadow-sm
                         focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors
                         dark:bg-neutral-800 dark:border-blue-700 dark:text-gray-100">
 
@@ -28,7 +28,7 @@
                         <div class="p-4">
                             <div
                                 class="w-full h-32 bg-gray-200 dark:bg-neutral-700 rounded-lg mb-3 flex items-center justify-center text-gray-400">
-                                <span class="text-sm">Item Image</span>
+                                <span class="text-sm">Gambar produk</span>
                             </div>
                             <h3 class="font-semibold text-gray-900 dark:text-gray-100 truncate">{{ $item->name }}</h3>
                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">SKU: {{ $item->sku }}</p>
@@ -36,13 +36,15 @@
                                 Rp {{ number_format($item->price, 0, ',', '.') }}
                             </p>
                         </div>
-                        <button wire:click="addToCart({{ $item->id }})" class="w-full py-3 bg-indigo-600 text-white font-bold transition-colors duration-200
-                                                 hover:bg-indigo-700 rounded-b-2xl">
-                            Add to Cart
+                       <button wire:click="addToCart({{ $item->id }})"
+                            class="w-full py-3 bg-indigo-600 text-white font-bold flex items-center justify-center gap-2
+                            transition-colors duration-200 hover:bg-indigo-700 rounded-b-2xl">
+                                <x-heroicon-o-shopping-bag class="w-5 h-5" /> Masukkan keranjang
                         </button>
+
                     </div>
                 @empty
-                    <p class="col-span-full text-center text-gray-500 dark:text-gray-400 mt-8">No products found.</p>
+                    <p class="col-span-full text-center text-gray-500 dark:text-gray-400 mt-8">Produk tidak ditemukan.</p>
                 @endforelse
             </div>
         </div>
@@ -57,7 +59,7 @@
                     <div class="flex-1">
                         <h4 class="text-sm font-semibold text-gray-800 dark:text-gray-100">{{ $cartItem['name'] }}</h4>
                         <p class="text-xs text-gray-500 dark:text-gray-400">SKU: {{ $cartItem['sku'] }}</p>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Rp {{ number_format($cartItem['price'], 0, ',', '.') }} each</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Rp {{ number_format($cartItem['price'], 0, ',', '.') }} setiap</p>
                     </div>
 
                     <div class="flex items-center space-x-2">
@@ -75,7 +77,7 @@
                     </div>
                 </div>
             @empty
-                <p class="text-center text-gray-400 dark:text-gray-500 mt-20">Your cart is empty.</p>
+                <p class="text-center text-gray-400 dark:text-gray-500 mt-20">Belum ada produk ditambahkan.</p>
             @endforelse
         </div>
 
@@ -84,12 +86,12 @@
             <div class="space-y-2">
                 <div>
                     <label for="customer"
-                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Customer</label>
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Pembeli</label>
                     <select wire:model="customer_id" id="customer" class="py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg sm:text-sm
                             focus:border-blue-500 focus:ring-blue-500
                             dark:bg-neutral-900 dark:border-neutral-700
                             dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
-                        <option value="">Select a customer</option>
+                        <option value="">Pilih pembeli</option>
                         @foreach($customers as $customer)
                             <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                         @endforeach
@@ -98,12 +100,12 @@
 
                 <div>
                     <label for="payment-method"
-                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Payment Method</label>
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Metode Pembayaran</label>
                     <select wire:model="payment_method_id" id="payment-method" class="py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg sm:text-sm
                             focus:border-blue-500 focus:ring-blue-500
                             dark:bg-neutral-900 dark:border-neutral-700
                             dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
-                        <option value="">Select a payment method</option>
+                        <option value="">Pilih metode pembayaran</option>
                         @foreach($paymentMethods as $method)
                             <option value="{{ $method->id }}">{{ $method->name }}</option>
                         @endforeach
@@ -112,8 +114,7 @@
             </div>
 
             <div class="mt-4">
-                <label for="discount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Discount
-                    Amount</label>
+                <label for="discount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Diskon</label>
                 <input wire:model.live.blur="discount_amount" type="number" id="discount" min="0"
                     placeholder="Enter discount amount" class="py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg sm:text-sm
                         focus:border-blue-500 focus:ring-blue-500
@@ -128,34 +129,33 @@
                         {{ number_format($this->subtotal, 0, ',', '.') }}</span>
                 </div>
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-sm text-gray-600 dark:text-gray-400">Tax (15%):</span>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Pajak (15%):</span>
                     <span class="font-medium text-gray-800 dark:text-gray-100">Rp
                         {{ number_format($this->tax, 0, ',', '.') }}</span>
                 </div>
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-sm text-gray-600 dark:text-gray-400">Total before discount:</span>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Total sebelum diskon:</span>
                     <span class="font-medium text-gray-800 dark:text-gray-100">Rp
                         {{ number_format($this->totalBeforeDiscount, 0, ',', '.') }}</span>
                 </div>
                 <div class="flex justify-between items-center mb-2 text-red-500 dark:text-red-400">
-                    <span class="text-sm font-semibold">Discount:</span>
+                    <span class="text-sm font-semibold">Diskon:</span>
                     <span class="font-semibold">- Rp {{ number_format($this->discount_amount, 0, ',', '.') }}</span>
                 </div>
                 <div
                     class="flex justify-between items-center text-xl font-bold mt-2 border-t border-gray-200 dark:border-neutral-700 pt-2">
-                    <span>Final Total:</span>
+                    <span>Total:</span>
                     <span>Rp {{ number_format($this->total, 0, ',', '.') }}</span>
                 </div>
                 <div
                     class="flex justify-between items-center text-lg font-bold mt-2 border-t border-gray-200 dark:border-neutral-700 pt-2">
-                    <span>Change Given:</span>
-                    <span>Rp {{ number_format($this->change, 0, ',', '.') }}</span>
+                    <span>Dibayarkan:</span>
                 </div>
             </div>
         </div>
 
         <div class="flex-shrink-0 mt-6">
-            <input wire:model.live.blur="paid_amount" type="number" min="0" placeholder="Amount Paid" class="py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg sm:text-sm
+            <input wire:model.live.blur="paid_amount" type="number" min="0" placeholder="Yang dibayarkan" class="py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg sm:text-sm
                        focus:border-blue-500 focus:ring-blue-500 mb-4
                        dark:bg-neutral-900 dark:border-neutral-700
                        dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
@@ -163,7 +163,7 @@
             <button wire:click="checkout" wire:loading.attr="disabled" class="w-full py-4 bg-green-600 text-white font-bold text-lg rounded-xl
                        transition-colors duration-200 hover:bg-green-700 disabled:opacity-50
                        disabled:cursor-not-allowed shadow-lg">
-                Complete Sale
+                Selesaikan pembelian
             </button>
         </div>
     </div>

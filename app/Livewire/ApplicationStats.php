@@ -13,9 +13,9 @@ class ApplicationStats extends StatsOverviewWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Number of Items', Item::count()),
-            Stat::make('Number of Users', User::count()),
-            Stat::make('Number of Sales', Sale::count())
+            Stat::make('Jumlah Produk', Item::count()),
+            Stat::make('Jumlah User', User::count()),
+            Stat::make('Jumlah Penjualan', Sale::count())
         ];
     }
 }

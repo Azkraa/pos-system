@@ -33,12 +33,12 @@ class CreateItem extends Component implements HasActions, HasSchemas
     {
         return $schema
             ->components([
-                Section::make('Add the Item')
-                ->description('fill the form to add new item')
+                Section::make('Tambahkan Produk')
+                ->description('Isi form dibawah ini untuk menambahkan produk')
                 ->columns(2)
                 ->schema([
                     TextInput::make('name')
-                    ->label('Item Name')
+                    ->label('Nama produk')
                     ->required(),
                     TextInput::make('sku')
                     ->required()
@@ -54,11 +54,12 @@ class CreateItem extends Component implements HasActions, HasSchemas
                         })
                     ),
                     TextInput::make('price')
+                    ->label('harga')
                     ->prefix('IDR')
                     ->required()
                     ->numeric(),
                     ToggleButtons::make('status')
-                    ->label('Is this Item Active?')
+                    ->label('Produk tersebut aktif?')
                     ->options([
                         'active' => 'Active',
                         'inactive' => 'Inactive'
@@ -80,11 +81,11 @@ class CreateItem extends Component implements HasActions, HasSchemas
         $this->form->model($record)->saveRelationships();
 
         Notification::make()
-        ->title('Item created!')
+        ->title('Produk Ditambahkan')
         ->success()
-        ->body("Item created successfully!")
+        ->body("Berhasil menambahkan produk!")
         ->actions([
-            Action::make('View Items Table')
+            Action::make('Kembali ke halaman sebelumnya')
             ->button()
             ->url(route('items.index')),
         ])

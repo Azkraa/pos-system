@@ -30,9 +30,11 @@ class ListPaymentMethods extends Component implements HasActions, HasSchemas, Ha
             ->query(fn (): Builder => PaymentMethod::query())
             ->columns([
                 TextColumn::make('name')
+                ->label('Nama')
                 ->searchable()
                 ->sortable(),
                 TextColumn::make('description')
+                ->label('Deskripsi')
                 ->limit(50)
             ])
             ->filters([
@@ -40,7 +42,7 @@ class ListPaymentMethods extends Component implements HasActions, HasSchemas, Ha
             ])
             ->headerActions([
                 Action::make('create')
-                ->label('Add Payment Method')
+                ->label('Tambah Metode Pembayaran')
                 ->url(fn (): string => route('payment.method.create'))
             ])
             ->recordActions([
@@ -50,7 +52,7 @@ class ListPaymentMethods extends Component implements HasActions, HasSchemas, Ha
                 ->action(fn (PaymentMethod $record) => $record->delete())
                 ->successNotification(
                     Notification::make()
-                    ->title('Payment method deleted successfully')
+                    ->title('Metode pembayaran berhasil dihapus')
                     ->success()
                 ),
                 Action::make('edit')

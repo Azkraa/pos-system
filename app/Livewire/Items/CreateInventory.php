@@ -32,16 +32,18 @@ class CreateInventory extends Component implements HasActions, HasSchemas
     {
         return $schema
             ->components([
-                Section::make('Add the Inventory')
-                ->description('Add the Inventory details as you want')
+                Section::make('Tambahkan Stok')
+                ->description('Tambahkan stok pada produk baru')
                 ->columns(2)
                 ->schema([
                     Select::make('item_id')
                     ->relationship('item', 'name')
+                    ->label('Produk')
                     ->searchable()
                     ->preload()
                     ->native(false),
                     TextInput::make('quantity')
+                    ->label('Stok')
                     ->numeric(),
                 ])
             ])
@@ -58,11 +60,11 @@ class CreateInventory extends Component implements HasActions, HasSchemas
         $this->form->model($record)->saveRelationships();
 
         Notification::make()
-        ->title('Inventory created!')
+        ->title('Stok ditambahkan')
         ->success()
-        ->body("Inventory created successfully!")
+        ->body("Berhasil menambahkan stok baru!")
         ->actions([
-            Action::make('View Inventory Table')
+            Action::make('Kembali ke halaman sebelumnya')
             ->button()
             ->url(route('inventories.index')),
         ])

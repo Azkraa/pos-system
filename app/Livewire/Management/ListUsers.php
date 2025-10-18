@@ -29,9 +29,11 @@ class ListUsers extends Component implements HasActions, HasSchemas, HasTable
             ->query(fn (): Builder => User::query())
             ->columns([
                 TextColumn::make('name')
+                ->label('Nama user')
                 ->searchable()
                 ->sortable(),
                 TextColumn::make('email')
+                ->label('Email')
                 ->searchable(),
                 TextColumn::make('role')
                 ->searchable()
@@ -43,7 +45,7 @@ class ListUsers extends Component implements HasActions, HasSchemas, HasTable
             ])
             ->headerActions([
                 Action::make('create')
-                ->label('Add User')
+                ->label('Tambah User')
                 ->url(fn (): string => route('users.create'))
             ])
             ->recordActions([

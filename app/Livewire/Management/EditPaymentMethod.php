@@ -34,12 +34,12 @@ class EditPaymentMethod extends Component implements HasActions, HasSchemas
     {
         return $schema
             ->components([
-                Section::make('Edit the Payment Method')
-                ->description('update the customer details as you want')
+                Section::make('Edit Metode Pembayaran')
+                ->description('Perbarui metode pembayaran sesuai yang kamu inginkan')
                 ->columns(2)
                 ->schema([
-                    TextInput::make('name'),
-                    Textarea::make('description'),
+                    TextInput::make('name')->label('Nama'),
+                    Textarea::make('description')->label('Deskripsi'),
                 ])
             ])
             ->statePath('data')
@@ -53,11 +53,11 @@ class EditPaymentMethod extends Component implements HasActions, HasSchemas
         $this->record->update($data);
 
         Notification::make()
-        ->title('Payment Method updated!')
+        ->title('Metode pembayaran diperbarui!')
         ->success()
-        ->body("Payment Method {$this->record->name} has been updated successfully!")
+        ->body("Metode pembayaran {$this->record->name} berhasil diperbarui!")
         ->actions([
-            Action::make('View Payment Method Table')
+            Action::make('Kembali ke halaman sebelumnya')
             ->button()
             ->url(route('payment.method.index')),
         ])

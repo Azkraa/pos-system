@@ -18,20 +18,25 @@ class LatestSales extends TableWidget
             ->query(fn (): Builder => Sale::query()->with(['customer','saleItems']))
             ->columns([
                 TextColumn::make('customer.name')
+                ->label('Nama pembeli')
                 ->sortable(),
                 TextColumn::make('saleItems.item.name')
-                ->label('Sold Items')
+                ->label('Produk terjual')
                 ->bulleted()
                 ->limitList(2)
                 ->expandableLimitedList(),
                 TextColumn::make('total')
+                ->label('Total')
                 ->money('IDR')
                 ->sortable(),
                 TextColumn::make('discount')
+                ->label('Diskon')
                 ->money('IDR'),
                 TextColumn::make('paid_amount')
+                ->label('Total pembayaran')
                 ->money('IDR'),
-                TextColumn::make('paymentMethod.name'),
+                TextColumn::make('paymentMethod.name')
+                ->label('Pembayaran'),
 
             ])
             ->filters([

@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\Customer;
 use Filament\Tables\Table;
 use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
 use Illuminate\Contracts\View\View;
 use Filament\Actions\BulkActionGroup;
 use Filament\Tables\Columns\TextColumn;
@@ -15,6 +16,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Schemas\Contracts\HasSchemas;
+use Illuminate\Database\Eloquent\Collection;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
@@ -31,17 +33,18 @@ class ListCustomers extends Component implements HasActions, HasSchemas, HasTabl
             ->query(fn (): Builder => Customer::query())
             ->columns([
                 TextColumn::make('name')
-                ->searchable()->sortable(),
+                ->label('Nama pembeli')->searchable()->sortable(),
                 TextColumn::make('email')
-                ->searchable()->sortable(),
+                ->label('Email')->searchable()->sortable(),
                 TextColumn::make('phone')
+                ->label('No. Hp')
             ])
             ->filters([
                 //
             ])
             ->headerActions([
                 Action::make('create')
-                ->label('Add Customer')
+                ->label('Tambah Pembeli')
                 ->url(fn (): string => route('customers.create'))
             ])
             ->recordActions([
@@ -51,7 +54,7 @@ class ListCustomers extends Component implements HasActions, HasSchemas, HasTabl
                 ->action(fn (Customer $record) => $record->delete())
                 ->successNotification(
                     Notification::make()
-                    ->title('Customer deleted successfully')
+                    ->title('Berhasil menghapus data pembeli')
                     ->success()
                 ),
                 Action::make('edit')
@@ -59,7 +62,19 @@ class ListCustomers extends Component implements HasActions, HasSchemas, HasTabl
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    //
+                    BulkAction::make('deleteSelected')
+                        ->label('Delete Selected')
+                        ->icon('heroicon-o-trash')
+                        ->color('danger')
+                        ->requiresConfirmation()
+                        ->action(function (Collection $records) {
+                            $records->each->delete();
+
+                            Notification::make()
+                                ->title('Berhasil menghapus data pembeli')
+                                ->success()
+                                ->send();
+                        }),
                 ]),
             ]);
     }

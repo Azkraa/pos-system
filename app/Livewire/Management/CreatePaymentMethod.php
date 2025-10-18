@@ -31,15 +31,15 @@ class CreatePaymentMethod extends Component implements HasActions, HasSchemas
     {
         return $schema
             ->components([
-                Section::make('Add the Payment Method')
-                ->description('Add the payment method details as you want')
+                Section::make('Tambahkan Metode Pembayaran')
+                ->description('Tambahkan metode pembayaran sesuai yang kamu inginkan')
                 ->columns(2)
                 ->schema([
                 TextInput::make('name')
-                    ->label('Payment Name')
+                    ->label('Nama Metode Pembayaran')
                     ->required(),
                 TextInput::make('description')
-                    ->label('Description')
+                    ->label('Deskripsi')
                     ->required(),
                 ])
             ])
@@ -56,11 +56,11 @@ class CreatePaymentMethod extends Component implements HasActions, HasSchemas
         $this->form->model($record)->saveRelationships();
 
         Notification::make()
-        ->title('Payment method created!')
+        ->title('Metode pembayaran ditambahkan!')
         ->success()
-        ->body("Payment method created successfully!")
+        ->body("Metode pembayaran berhasil ditambahkan!")
         ->actions([
-            Action::make('View Payment Method Table')
+            Action::make('Kembali ke halaman sebelumnya')
             ->button()
             ->url(route('payment.method.index')),
         ])

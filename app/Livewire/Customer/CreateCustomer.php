@@ -32,19 +32,19 @@ class CreateCustomer extends Component implements HasActions, HasSchemas
     {
         return $schema
             ->components([
-                Section::make('Add the Inventory')
-                ->description('Add the Inventory details as you want')
+                Section::make('Tambahkan Pembeli')
+                ->description('Tambahkan data pembeli sesuai yang kamu inginkan')
                 ->columns(2)
                 ->schema([
                     TextInput::make('name')
-                    ->label('Customer Name')
+                    ->label('Nama pembeli')
                     ->required(),
                 TextInput::make('email')
-                    ->label('Customer Email')
+                    ->label('Email')
                     ->unique()
                     ->required(),
                 TextInput::make('phone')
-                    ->label('Customer Phone Number')
+                    ->label('No. Hp')
                     ->unique()
                     ->numeric()
                     ->required(),
@@ -63,11 +63,11 @@ class CreateCustomer extends Component implements HasActions, HasSchemas
         $this->form->model($record)->saveRelationships();
 
         Notification::make()
-        ->title('Customer data created!')
+        ->title('Data pembeli dibuat!')
         ->success()
-        ->body("Customer data created successfully!")
+        ->body("Berhasil menambahkan data pembeli!")
         ->actions([
-            Action::make('View Customer Table')
+            Action::make('Kembali ke halaman sebelumnya')
             ->button()
             ->url(route('customers.index')),
         ])

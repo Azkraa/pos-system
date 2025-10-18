@@ -29,9 +29,9 @@ class ListInventories extends Component implements HasActions, HasSchemas, HasTa
         return $table
             ->query(fn (): Builder => Inventory::query())
             ->columns([
-                TextColumn::make('item.name')->searchable()->sortable(),
-                TextColumn::make('item.sku')->searchable(),
-                TextColumn::make('quantity')->searchable()->sortable()->badge()->color('warning'),
+                TextColumn::make('item.name')->label('Nama produk')->searchable()->sortable(),
+                TextColumn::make('item.sku')->label('Sku')->searchable(),
+                TextColumn::make('quantity')->label('Stok')->searchable()->sortable()->badge()->color('warning'),
                 TextColumn::make('created_at')->sortable()
                 ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -40,7 +40,7 @@ class ListInventories extends Component implements HasActions, HasSchemas, HasTa
             ])
             ->headerActions([
                 Action::make('create')
-                ->label('Add Item')
+                ->label('Tambah Stok')
                 ->url(fn (): string => route('inventory.create'))
             ])
             ->recordActions([
@@ -50,7 +50,7 @@ class ListInventories extends Component implements HasActions, HasSchemas, HasTa
                 ->action(fn (Inventory $record) => $record->delete())
                 ->successNotification(
                     Notification::make()
-                    ->title('Inventory deleted successfully')
+                    ->title('Data stok berhasil dihapus')
                     ->success()
                 ),
                 Action::make('edit')
